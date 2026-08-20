@@ -1,0 +1,115 @@
+:root{
+        /* FONT SIZE */
+    --text-sm-: 1.4rem;
+    --text-base-: 1.6rem;
+    --text-paragraph-: 2.0rem;
+    --text-h5-: 2.4rem;
+    --text-h4-: 3.2rem;
+    --text-h3-: 4rem;
+    --text-h2-: 5.8rem;
+    --text-h1-: 6.2rem;
+
+    /* FONT WEIGHT */
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;  
+
+    /* LINE HEIGHT */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    /* --------- COLORS ------------- */
+    --primary:#0291DA;
+    --secondary:#1C5FA2;
+    --gold:#D2AE66;
+    --white:#F2F4F5;
+    --red:#CF251E;
+    --dark-red:#AD2523;
+    --navy:#27348E;
+    --light-blue:#59A8D6;
+    --teal:#2188B5;
+    --gray-green:#A6AC95;
+    --beige:#D3AB96;
+    --black:#000001;
+}
+
+body{
+    background:var(--white);
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+.btn-primary{
+
+    background:var(--primary);
+
+    border:none;
+
+}
+
+.btn-primary:hover{
+
+    background:var(--deep-blue);
+
+}
+
+.text-primary{
+
+color:var(--primary)!important;
+
+}
+
+.card{
+
+    border:none;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+
+}
+
+/* Employee Table */
+
+.table thead{
+
+background:#1C5FA2;
+color:white;
+
+}
+
+.table tbody tr:hover{
+
+background:#F2F4F5;
+
+}
+
+.btn-primary{
+
+background:#0291DA;
+border:none;
+
+}
+
+.btn-warning{
+
+background:#D2AE66;
+border:none;
+color:white;
+
+}
+
+.btn-danger{
+
+background:#CF251E;
+border:none;
+
+}
+
+.card{
+
+border-radius:15px;
+
+}
+.container {
+
+}
