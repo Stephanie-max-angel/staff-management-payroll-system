@@ -1,5 +1,5 @@
 <?php
-require("includes/auth.php");
+require_once("includes/auth.php");
 require_once("config/database.php");
 require_once("includes/header.php");
 require_once("includes/sidebar.php");
@@ -33,8 +33,9 @@ require_once("includes/navbar.php");
     <div class="dashboard-grid">
 
         <!-- Employees -->
-        <a href="/final-year-project/main/admin/employees/employees.php"
-           class="dashboard-card">
+         <a href="/employee-management-system/main/admin/employees/employees.php"
+   class="dashboard-card">
+       
 
             <div class="card-icon">
                 <i class="bi bi-people-fill"></i>
@@ -53,7 +54,7 @@ require_once("includes/navbar.php");
 
 
         <!-- Departments -->
-        <a href="/final-year-project/main/admin/departments/departments.php"
+        <a href="/employee-management-system/main/admin/departments/departments.php"
            class="dashboard-card">
 
             <div class="card-icon">
@@ -73,7 +74,7 @@ require_once("includes/navbar.php");
 
 
         <!-- Positions -->
-        <a href="/final-year-project/main/admin/positions/positions.php"
+        <a href="/employee-management-system/main/admin/positions/positions.php"
            class="dashboard-card">
 
             <div class="card-icon">
@@ -93,7 +94,7 @@ require_once("includes/navbar.php");
 
 
         <!-- Payroll -->
-        <a href="/final-year-project/main/admin/employee-payroll/payroll.php"
+        <a href="/employee-management-system/main/admin/employee-payroll/payroll.php"
            class="dashboard-card">
 
             <div class="card-icon">
@@ -113,7 +114,7 @@ require_once("includes/navbar.php");
 
 
         <!-- Leave -->
-        <a href="/final-year-project/main/admin/employee-leave/leave-types.php"
+        <a href="/employee-management-system/main/admin/employee-leave/leave-types.php"
            class="dashboard-card">
 
             <div class="card-icon">
@@ -133,7 +134,7 @@ require_once("includes/navbar.php");
 
 
         <!-- Reports -->
-        <a href="/final-year-project/main/admin/employee-reports/reports.php"
+        <a href="/employee-management-system/main/admin/employee-reports/reports.php"
            class="dashboard-card">
 
             <div class="card-icon">

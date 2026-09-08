@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white"
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white admin-sidebar"
 style="
 width:260px;
 height:100vh;
@@ -9,11 +9,11 @@ left: 0;
 z-index: 1000;
 ">
 
-<!-- <h3 class="text-center mb-4">
+<h3 class="text-center mb-4">
 
-Payroll System
+ Employee Management System
 
-</h3> -->
+</h3>
 
 <hr>
 
@@ -21,7 +21,7 @@ Payroll System
 
 <li class="nav-item mb-2">
 
-<a href="/staff-management-payroll-system/main/admin/dashboard.php" class="nav-link text-white">
+<a href="/employee-management-system/main/admin/dashboard.php" class="nav-link text-white">
 
 <i class="bi bi-speedometer2"></i>
 
@@ -33,7 +33,7 @@ Dashboard
 
   <li class="mb-2">
 
-  <a href="/staff-management-payroll-system/main/admin/employees/employees.php" class="nav-link text-white">
+  <a href="/employee-management-system/main/admin/employees/employees.php" class="nav-link text-white">
 
   <i class="bi bi-people-fill"></i>
 
@@ -45,7 +45,7 @@ Employees
 
 <li class="mb-2">
 
-<a href="/staff-management-payroll-system/main/admin/departments/departments.php" class="nav-link text-white">
+<a href="/employee-management-system/main/admin/departments/departments.php" class="nav-link text-white">
 
 <i class="bi bi-building"></i>
 
@@ -57,7 +57,7 @@ Departments
 
 <li class="mb-2">
 
-<a href="/staff-management-payroll-system/main/admin/positions/positions.php" class="nav-link text-white">
+<a href="/employee-management-system/main/admin/positions/positions.php" class="nav-link text-white">
 
 <i class="bi bi-briefcase-fill"></i>
 
@@ -69,7 +69,7 @@ Positions
 
 <li class="mb-2">
 
-<a href="/staff-management-payroll-system/main/admin/employee-payroll/payroll.php" class="nav-link text-white">
+<a href="/employee-management-system/main/admin/employee-payroll/payroll.php" class="nav-link text-white">
 
 <i class="bi bi-cash-stack"></i>
 
@@ -81,7 +81,7 @@ Payroll
 
 <li class="mb-2">
 
-<a href="/staff-management-payroll-system/main/admin/employee-leave/leave-request.php" class="nav-link text-white">
+<a href="/employee-management-system/main/admin/employee-leave/leave-request.php" class="nav-link text-white">
 
 <i class="bi bi-calendar-check"></i>
 
@@ -93,7 +93,7 @@ Leave
 
 <li class="mb-2">
 
-<a href="/staff-management-payroll-system/main/admin/employee-reports/reports.php" class="nav-link text-white">
+<a href="/employee-management-system/main/admin/employee-reports/reports.php" class="nav-link text-white">
 
 <i class="bi bi-file-earmark-text"></i>
 
@@ -105,7 +105,7 @@ Reports
 
 <li class="mt-5">
 
-<a href="/staff-management-payroll-system/main/admin/logout.php" class="nav-link text-warning">
+<a href="/employee-management-system/main-logout.php" class="nav-link text-warning">
 
 <i class="bi bi-box-arrow-right"></i>
 

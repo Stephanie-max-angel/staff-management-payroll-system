@@ -15,23 +15,6 @@ if(!isset($_SESSION['admin_id'])){
 
 
 
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>Leave Requests</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
-
-</head>
-
-<body class="bg-light">
 
 
 
@@ -41,7 +24,7 @@ href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
 
 <div class="d-flex justify-content-between mb-4">
 
-<h2>
+<h2 class="fw-bold">
 
 Employee Leave Requests
 
@@ -93,8 +76,7 @@ Leave rejected successfully.
 
 
 
-
-
+<div class="table-responsive">
 <table
 
 id="leaveTable"
@@ -310,6 +292,7 @@ Reject
 </tbody>
 
 </table>
+</div>
 
 
 
@@ -329,7 +312,6 @@ Reject
 new DataTable("#leaveTable");
 
 </script>
-
-</body>
-
-</html>
+<?php
+require_once("../includes/footer.php");
+?>

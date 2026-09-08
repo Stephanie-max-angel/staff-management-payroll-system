@@ -1,3 +1,4 @@
 <?php
-    header("location: main/index.php");
+    header("location: main-login.php");
+    exit();
 ?>

@@ -272,7 +272,7 @@ $rejectedLeave = $rejectedRow['total'] ?? 0;
     <!-- Leave Table -->
 
     <div class="table-container">
-
+        <div class="table-responsive">
         <table id="leaveTable">
 
             <thead>
@@ -455,6 +455,7 @@ $rejectedLeave = $rejectedRow['total'] ?? 0;
             </tbody>
 
         </table>
+        </div>
 
     </div>
 

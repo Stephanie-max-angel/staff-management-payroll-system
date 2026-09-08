@@ -58,7 +58,7 @@ $totalEmployees = mysqli_num_rows($result);
 
 
 
-    <main class="main-content">
+    <main class="main-container">
 
      
 
@@ -115,6 +115,7 @@ $totalEmployees = mysqli_num_rows($result);
             <!-- Employee Table -->
             <div class="table-container">
 
+                <div class="table-responsive">
                 <table id="employeeTable">
 
                     <thead>
@@ -201,6 +202,7 @@ $totalEmployees = mysqli_num_rows($result);
                     </tbody>
 
                 </table>
+                </div>
 
             </div>
 

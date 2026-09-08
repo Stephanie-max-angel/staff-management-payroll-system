@@ -2,6 +2,10 @@
 session_start();
 
 require_once("../config/database.php");
+require_once("../includes/auth.php");
+require_once("../includes/header.php");
+require_once("../includes/sidebar.php");
+require_once("../includes/navbar.php");
 
 if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
@@ -293,8 +297,5 @@ Cancel
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
-
-</html>
+<?php require_once("../includes/footer.php"); ?>

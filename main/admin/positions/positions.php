@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require_once("../includes/auth.php");
 require_once("../config/database.php");
+require_once("../includes/auth.php");
 require_once("../includes/header.php");
 require_once("../includes/sidebar.php");
 require_once("../includes/navbar.php");
@@ -16,7 +16,7 @@ if(!isset($_SESSION['admin_id'])){
 }
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html lang="en">
 
@@ -34,7 +34,7 @@ content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
 href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
 
-</head>
+</head> -->
 
 <body class="bg-light">
 
@@ -111,6 +111,8 @@ Position deleted successfully.
 ?>
 
 <!-- Create the Table -->
+
+<div class="table-responsive">
  <table
 
 id="positionTable"
@@ -202,7 +204,7 @@ while($row=mysqli_fetch_assoc($result)){
 
 <a
 
-href="edit-position.php?id=<?= $row['position_id']; ?>"
+href="edit-positions.php?id=<?= $row['position_id']; ?>"
 
 class="btn btn-warning btn-sm">
 
@@ -212,7 +214,7 @@ Edit
 
 <a
 
-href="delete-position.php?id=<?= $row['position_id']; ?>"
+href="delete-positions.php?id=<?= $row['position_id']; ?>"
 
 class="btn btn-danger btn-sm"
 
@@ -237,6 +239,7 @@ Delete
 </table>
 
 </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -253,8 +256,8 @@ new DataTable("#positionTable");
 
 </script>
 
-</body>
+<!-- </body>
 
-</html>
+</html> -->
 
 <?php require_once("../includes/footer.php"); ?>

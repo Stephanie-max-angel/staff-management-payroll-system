@@ -6,6 +6,7 @@ require_once("../config/database.php");
 require_once("../includes/auth.php");
 require_once("../includes/header.php");
 require_once("../includes/sidebar.php");
+require_once("../includes/navbar.php");
 
 if (!isset($_SESSION['admin_id'])) {
 
@@ -282,7 +283,7 @@ if (isset($_POST['update'])) {
 ?>
 
 
-<div class="main-content">
+
 
 
     <!-- =========================================
@@ -291,7 +292,7 @@ if (isset($_POST['update'])) {
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div>
+        <div style="padding:0 1.5rem">
 
             <h2 class="fw-bold mb-1">
 
@@ -307,17 +308,19 @@ if (isset($_POST['update'])) {
 
         </div>
 
+        <div style="margin-right:1.5rem">
+            <a
+                href="employees.php"
+                class="btn btn-secondary"
+            >
 
-        <a
-            href="employees.php"
-            class="btn btn-secondary"
-        >
+                <i class="bi bi-arrow-left"></i>
 
-            <i class="bi bi-arrow-left"></i>
+                Back to Employees
 
-            Back to Employees
+            </a>
+        </div>
 
-        </a>
 
     </div>
 
@@ -593,6 +596,74 @@ if (isset($_POST['update'])) {
 
 
                 <hr class="my-4">
+                <!-- =========================================
+     EMPLOYEE PHOTO
+========================================= -->
+
+<div class="row mt-4">
+
+    <div class="col-md-6">
+
+        <label class="form-label fw-semibold">
+
+            Employee Photo
+
+        </label>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <?php if (!empty($employee['photo'])) { ?>
+
+                <img
+                    src="../uploads/<?= htmlspecialchars($employee['photo']); ?>"
+                    alt="Employee Photo"
+                    class="rounded-circle border"
+                    style="
+                        width:80px;
+                        height:80px;
+                        object-fit:cover;
+                    "
+                >
+
+            <?php } else { ?>
+
+                <div
+                    class="rounded-circle bg-light border d-flex align-items-center justify-content-center"
+                    style="
+                        width:80px;
+                        height:80px;
+                    "
+                >
+
+                    <i class="bi bi-person-fill text-secondary fs-2"></i>
+
+                </div>
+
+            <?php } ?>
+
+
+            <div class="flex-grow-1">
+
+                <input
+                    type="file"
+                    name="photo"
+                    class="form-control"
+                    accept="image/*"
+                >
+
+                <small class="text-muted">
+
+                    Choose a new photo to replace the current one.
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 
@@ -922,7 +993,6 @@ if (isset($_POST['update'])) {
     </div>
 
 
-</div>
 
 
 <?php

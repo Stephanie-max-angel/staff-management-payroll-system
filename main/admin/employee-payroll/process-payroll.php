@@ -71,7 +71,7 @@ ON employees.position_id=
 
 positions.position_id
 
-WHERE employee_id=?
+WHERE employees.employee_id=?
 
 ");
 
@@ -161,7 +161,8 @@ $config = $settings->fetch_assoc();
 
 $tax = ($basic_salary * $config['tax_percentage']) / 100;
 
-
+// Pension
+$pension = 40000;
 
 
 $net_salary =
@@ -182,31 +183,25 @@ $pension;
 
 
 
-$stmt=$conn->prepare("
+$stmt = $conn->prepare("
 
 INSERT INTO payroll(
 
 employee_id,
-
 payroll_month,
-
 payroll_year,
-
 basic_salary,
-
 allowances,
-
 deductions,
-
 tax,
-
+pension,
 net_salary
 
 )
 
 VALUES(
 
-?,?,?,?,?,?,?,?
+?,?,?,?,?,?,?,?,?
 
 )
 
@@ -214,26 +209,19 @@ VALUES(
 
 $stmt->bind_param(
 
-"isiddddd",
+"isidddddd",
 
 $employee_id,
-
 $month,
-
 $year,
-
 $basic_salary,
-
 $allowances,
-
 $deductions,
-
 $tax,
-
+$pension,
 $net_salary
 
 );
-
 
 
 if($stmt->execute()){

@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Environment / secrets
+.env
+.env.*
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+
+# Libraries
+main/ionicons-main/

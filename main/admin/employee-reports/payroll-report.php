@@ -423,6 +423,7 @@ $totalPending = $pendingRow['total'] ?? 0;
         <!-- TABLE -->
 
         <div class="table-wrapper">
+            <div class="table-responsive">
 
             <table id="payrollTable">
 
@@ -724,6 +725,7 @@ $totalPending = $pendingRow['total'] ?? 0;
                 </tbody>
 
             </table>
+            </div>
 
         </div>
 
@@ -1630,4 +1632,4 @@ $totalPending = $pendingRow['total'] ?? 0;
 
 </style>
 
-<?php require_once("../includes/navbar.php"); ?>
+<?php require_once("../includes/footer.php"); ?>

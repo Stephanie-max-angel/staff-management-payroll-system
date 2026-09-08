@@ -15,6 +15,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+
+ <link rel="stylesheet" href="/employee-management-system/main/admin/assets/responsive.css">
+
 <style>
 
 * {
@@ -32,16 +35,18 @@ body {
     margin-left: 260px;
     width: calc(100% - 260px);
     min-height: 100vh;
-    padding: 30px;
+    /* padding: 30px; */
 }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
 
     .main-content {
         margin-left: 0;
         width: 100%;
         padding: 20px;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
 }

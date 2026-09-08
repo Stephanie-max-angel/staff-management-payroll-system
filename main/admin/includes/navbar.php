@@ -1,9 +1,12 @@
+
 <div class="mb-4"> <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded">
+  
 
 <div class="container-fluid">
-
+<button type="button" class="sidebar-toggle" id="sidebarToggle">
+    <i class="bi bi-list"></i>
+</button>
 <h4 class="fw-bold">
-
 Dashboard
 
 </h4>

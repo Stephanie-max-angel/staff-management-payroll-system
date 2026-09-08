@@ -531,6 +531,7 @@ $result = $stmt->get_result();
     width: 100%;
 
     font-family: 'Poppins', sans-serif;
+    padding: 10px;
 
 }
 

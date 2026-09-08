@@ -185,7 +185,7 @@ $totalEmployees =
     <!-- Position Table -->
 
     <div class="table-container">
-
+        <div class="table-responsive">
         <table id="positionTable">
 
             <thead>
@@ -272,6 +272,7 @@ $totalEmployees =
             </tbody>
 
         </table>
+        </div>
 
     </div>
 

@@ -1,17 +1,13 @@
+
 <?php
+
 session_start();
 
 require_once("../admin/config/database.php");
-require("includes/auth.php");
-require_once("includes/header.php");
-require_once("includes/sidebar.php");
-require_once("includes/navbar.php");
 
 if (!isset($_SESSION['employee_id'])) {
-
-    header("Location: login.php");
+    header("Location: ../../main-login.php");
     exit();
-
 }
 
 $employee_id = $_SESSION['employee_id'];
@@ -23,14 +19,21 @@ $stmt = $conn->prepare("
 ");
 
 $stmt->bind_param("i", $employee_id);
+
 $stmt->execute();
 
 $result = $stmt->get_result();
+
 $employee = $result->fetch_assoc();
 
 $stmt->close();
 
+require_once("includes/header.php");
+require_once("includes/sidebar.php");
+require_once("includes/navbar.php");
+
 ?>
+
 
 <div class="employee-dashboard">
 
@@ -264,7 +267,7 @@ $stmt->close();
 
 .employee-dashboard {
 
-    margin-left: 260px;
+    /* margin-left: 260px; */
 
     min-height: 100vh;
 
@@ -709,7 +712,9 @@ $stmt->close();
 ========================================= */
 
 @media (max-width: 1050px) {
-
+    .employee-dashboard {
+        padding: 30px;
+    }
     .employee-grid {
 
         grid-template-columns: repeat(2, 1fr);
@@ -726,45 +731,139 @@ $stmt->close();
 @media (max-width: 700px) {
 
     .employee-dashboard {
-
-        margin-left: 0;
-
-        padding: 20px;
-
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 20px 15px;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
+    /* Welcome card */
 
     .welcome-card {
-
-        padding: 25px;
-
+        width: 100%;
+        padding: 25px 20px;
+        margin-bottom: 25px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 
+    .welcome-text {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .welcome-label {
+        font-size: 10px;
+    }
 
     .welcome-card h1 {
-
-        font-size: 25px;
-
+        font-size: 23px;
+        line-height: 1.3;
+        margin: 8px 0;
     }
 
+    .welcome-card p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
 
     .welcome-icon {
-
-        width: 65px;
-
-        height: 65px;
-
-        font-size: 30px;
-
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        font-size: 25px;
     }
 
+
+    /* Section heading */
+
+    .section-heading {
+        margin-bottom: 15px;
+    }
+
+    .section-heading h2 {
+        font-size: 21px;
+    }
+
+    .section-heading p {
+        font-size: 13px;
+    }
+
+
+    /* Cards */
 
     .employee-grid {
-
+        width: 100%;
         grid-template-columns: 1fr;
-
+        gap: 16px;
     }
 
+    .employee-card {
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+        padding: 22px;
+        box-sizing: border-box;
+    }
+
+    .employee-card-top {
+        margin-bottom: 18px;
+    }
+
+    .employee-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 21px;
+    }
+
+    .card-arrow {
+        width: 32px;
+        height: 32px;
+    }
+
+    .employee-card h3 {
+        font-size: 18px;
+    }
+
+    .employee-card p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .card-link {
+        margin-top: 15px;
+    }
+
+
+    /* Account information */
+
+    .account-info {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 18px;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .account-info-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        font-size: 19px;
+    }
+
+    .account-info h3 {
+        font-size: 15px;
+    }
+
+    .account-info p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
 }
 
 </style>

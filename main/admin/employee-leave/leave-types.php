@@ -14,27 +14,6 @@ if(!isset($_SESSION['admin_id'])){
 
 
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>Leave Types</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
-
-</head>
-
-<body class="bg-light">
-
-
-
 
 
 <div class="container mt-5">
@@ -206,7 +185,6 @@ Delete
 new DataTable("#leaveTable");
 
 </script>
-
-</body>
-
-</html>
+<?php
+require_once("../includes/footer.php");
+?>

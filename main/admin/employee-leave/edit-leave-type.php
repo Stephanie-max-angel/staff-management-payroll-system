@@ -122,23 +122,7 @@ if(isset($_POST['update'])){
 
 
 
-<!DOCTYPE html>
 
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>Edit Leave Type</title>
-
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
-
-</head>
-
-<body class="bg-light">
 
 
 
@@ -305,6 +289,6 @@ Cancel
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
-
-</html>
+<?php
+require_once("../includes/footer.php");
+?>

@@ -83,7 +83,7 @@ My Leave Requests
 
 
 
-
+<div class="table-responsive">
 <table
 id="leaveTable"
 class="table table-bordered table-hover">
@@ -257,6 +257,7 @@ View
 </tbody>
 
 </table>
+</div>
 
 
 

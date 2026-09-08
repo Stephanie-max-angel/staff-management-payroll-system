@@ -69,6 +69,7 @@ My Payslips
 
 <div class="card-body">
 
+<div class="table-responsive">
 <table
 id="payslipTable"
 class="table table-bordered table-hover">
@@ -204,6 +205,7 @@ View
 </tbody>
 
 </table>
+</div>
 
 
 

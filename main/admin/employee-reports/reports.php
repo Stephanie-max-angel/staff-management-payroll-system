@@ -12,20 +12,12 @@ $pageTitle = "Reports";
 ?>
 
 
-
-<div class="dashboard-container">
-
-
-
-    <main class="main-content">
-
-
-        <div class="content">
+        <div class="content" style="padding:20px;">
 
             <!-- Page Header -->
             <div class="page-header">
                 <div>
-                    <h1>Reports</h1>
+                    <h2 class="fw-bold">Reports</h2>
                     <p>Generate and view reports for employees, payroll, leave, departments and positions.</p>
                 </div>
             </div>
@@ -146,9 +138,7 @@ $pageTitle = "Reports";
 
         </div>
 
-    </main>
 
-</div>
 
 
 <style>
@@ -257,6 +247,6 @@ $pageTitle = "Reports";
 </style>
 
 <?php
-require_once("../includes/navbar.php");
+require_once("../includes/footer.php");
 ?>
 

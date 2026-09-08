@@ -6,8 +6,17 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
+// Prevent browser from caching protected pages
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
+
+// Check admin login
+
+
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: ../admin/login.php");
+    header("Location: /employee-management-system/main/main-login.php");
     exit();
 }
 ?>

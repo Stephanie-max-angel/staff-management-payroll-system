@@ -17,11 +17,13 @@ ORDER BY department_name ASC
 $result = mysqli_query($conn, $sql);
 ?>
 
+
+
 <div class="container-fluid mt-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h2>Departments</h2>
+        <h2 class="fw-bold">Departments</h2>
 
         <a href="addd-departments.php" class="btn btn-primary">
 
@@ -52,7 +54,8 @@ $result = mysqli_query($conn, $sql);
         </div>
 
         <div class="card-body">
-
+        <div class="table-responsive">
+        <div class="table-responsive">
             <table id="departmentTable" class="table table-bordered table-striped table-hover">
 
                 <thead>
@@ -120,15 +123,17 @@ $result = mysqli_query($conn, $sql);
             </table>
 
         </div>
+        </div>
+        </div>
 
     </div>
 
 </div>
 
-<!-- <link rel="stylesheet"
+<link rel="stylesheet"
 href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
 

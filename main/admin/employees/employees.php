@@ -5,35 +5,12 @@ require_once("../config/database.php");
 require_once("../includes/auth.php");
 require_once("../includes/header.php");
 require_once("../includes/sidebar.php");
+require_once("../includes/navbar.php");
 
-if(!isset($_SESSION['admin_id'])){
-    header("Location: login.php");
-    exit();
-}
+
 ?>
 
 
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>Employees</title>
-
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
-
-</head>
-
-<body class="bg-light">
 
 
 <div class="container mt-5">
@@ -57,6 +34,8 @@ Add Employee
 
 </div>
 
+
+<div class="table-responsive">
 <table
 id="employeeTable"
 class="table table-bordered table-hover">
@@ -132,35 +111,25 @@ while($row=mysqli_fetch_assoc($result)){
 
 <td>
 
+
+
 <?php
-
-if(!empty($row['photo'])){
-
+$photo = !empty($row['photo']) ? $row['photo'] : 'default.jpg';
 ?>
 
 <img
-src="../uploads/<?= htmlspecialchars($row['photo']); ?>"
-width="50"
-height="50"
-class="rounded-circle">
+    src="../uploads/<?= htmlspecialchars($photo); ?>"
+    width="50"
+    height="50"
+    class="rounded-circle"
+    style="object-fit: cover;"
+    alt="Employee Photo"
+    onerror="this.src='../uploads/default.png';">
 
-<?php
 
-}else{
 
-?>
 
-<img
-src="../assets/images/default-user.png"
-width="50"
-height="50"
-class="rounded-circle">
 
-<?php
-
-}
-
-?>
 
 </td>
 
@@ -256,12 +225,12 @@ Delete
 <?php
 
 }
-
 ?>
 
 </tbody>
 
 </table>
+</div>
 
 
 
@@ -279,9 +248,7 @@ new DataTable("#employeeTable");
 
 </script>
 
-</body>
 
-</html>
 
 <?php
 require_once("../includes/footer.php")
