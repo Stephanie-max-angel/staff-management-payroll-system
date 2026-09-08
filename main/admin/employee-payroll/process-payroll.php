@@ -1,10 +1,8 @@
 <?php
 session_start();
+
 require_once("../config/database.php");
 require_once("../includes/auth.php");
-require_once("../includes/header.php");
-require_once("../includes/sidebar.php");
-require_once("../includes/navbar.php");
 
 if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
@@ -14,483 +12,462 @@ if (!isset($_SESSION['admin_id'])) {
 $error = "";
 $success = "";
 
-
-
-if(isset($_POST['generate'])){
-
-    $employee_id = intval($_POST['employee_id']);
+if (isset($_POST['generate'])) {
 
     $month = $_POST['payroll_month'];
-
-//     echo "<pre>";
-// var_dump($_POST['payroll_month']);
-// exit();
-
     $year = intval($_POST['payroll_year']);
 
+    // Fixed pension contribution
+    $pension = 40000;
 
+    // Get tax percentage
+    $settings = $conn->query("
+        SELECT tax_percentage
+        FROM payroll_settings
+        LIMIT 1
+    ");
+
+    $config = $settings->fetch_assoc();
 
-  $check = $conn->prepare("
-SELECT payroll_id
-FROM payroll
-WHERE employee_id=?
-AND payroll_month=?
-AND payroll_year=?
-");
+    $tax_percentage = $config['tax_percentage'] ?? 0;
+
+    // Get all active employees
+    $employees_query = $conn->query("
+        SELECT 
+            employee_id,
+            employee_number,
+            first_name,
+            last_name,
+            position_id
+        FROM employees
+        WHERE status = 'Active'
+        ORDER BY first_name, last_name
+    ");
 
-$check->bind_param(
-"isi",
-$employee_id,
-$month,
-$year
-);
+    if (!$employees_query) {
 
-$check->execute();
+        $error = "Unable to retrieve employees.";
 
-$check->store_result();
+    } else {
 
-if($check->num_rows>0){
+        $generated = 0;
+        $skipped = 0;
 
-$error="Payroll has already been generated for this employee.";
+        while ($employee = $employees_query->fetch_assoc()) {
 
-}else{  
+            $employee_id = $employee['employee_id'];
 
+            /*
+             * Check if payroll already exists
+             * for this employee, month and year.
+             */
+            $check = $conn->prepare("
+                SELECT payroll_id
+                FROM payroll
+                WHERE employee_id = ?
+                AND payroll_month = ?
+                AND payroll_year = ?
+            ");
 
+            $check->bind_param(
+                "isi",
+                $employee_id,
+                $month,
+                $year
+            );
 
-$stmt = $conn->prepare("
+            $check->execute();
+            $check->store_result();
 
-SELECT
+            if ($check->num_rows > 0) {
 
-positions.basic_salary
+                $skipped++;
 
-FROM employees
+                $check->close();
 
-INNER JOIN positions
+                continue;
+            }
 
-ON employees.position_id=
+            $check->close();
 
-positions.position_id
 
-WHERE employees.employee_id=?
-
-");
-
-$stmt->bind_param("i",$employee_id);
-
-$stmt->execute();
-
-$result=$stmt->get_result();
-
-$salary=$result->fetch_assoc();
-
-$stmt->close();
-
-$basic_salary=$salary['basic_salary'];
-
-
-
-
-$stmt = $conn->prepare("
-
-SELECT
-
-SUM(allowances.amount) AS total
-
-FROM employee_allowances
-
-INNER JOIN allowances
-
-ON employee_allowances.allowance_id=
-
-allowances.allowance_id
-
-WHERE employee_allowances.employee_id=?
-
-");
-
-$stmt->bind_param("i",$employee_id);
-
-$stmt->execute();
-
-$result=$stmt->get_result();
-
-$row=$result->fetch_assoc();
-
-$allowances=$row['total'] ?? 0;
-
-$stmt->close();
-
-
-
-
-$stmt = $conn->prepare("
-
-SELECT
-
-SUM(deductions.amount) AS total
-
-FROM employee_deductions
-
-INNER JOIN deductions
-
-ON employee_deductions.deduction_id=
-
-deductions.deduction_id
-
-WHERE employee_deductions.employee_id=?
-
-");
-
-$stmt->bind_param("i",$employee_id);
-
-$stmt->execute();
-
-$result=$stmt->get_result();
-
-$row=$result->fetch_assoc();
-
-$deductions=$row['total'] ?? 0;
-
-$stmt->close();
-
-
-
-
-$settings = $conn->query("SELECT tax_percentage FROM payroll_settings LIMIT 1");
-$config = $settings->fetch_assoc();
-
-$tax = ($basic_salary * $config['tax_percentage']) / 100;
-
-// Pension
-$pension = 40000;
-
-
-$net_salary =
-$basic_salary
-+
-$allowances
--
-$deductions
--
-$tax
--
-$pension;
-
-
-
-
-
-
-
-
-$stmt = $conn->prepare("
-
-INSERT INTO payroll(
-
-employee_id,
-payroll_month,
-payroll_year,
-basic_salary,
-allowances,
-deductions,
-tax,
-pension,
-net_salary
-
-)
-
-VALUES(
-
-?,?,?,?,?,?,?,?,?
-
-)
-
-");
-
-$stmt->bind_param(
-
-"isidddddd",
-
-$employee_id,
-$month,
-$year,
-$basic_salary,
-$allowances,
-$deductions,
-$tax,
-$pension,
-$net_salary
-
-);
-
-
-if($stmt->execute()){
-
-$success="Payroll generated successfully.";
-
-}else{
-
-$error="Unable to generate payroll.";
-
+            /*
+             * Get basic salary from employee's position.
+             */
+            $stmt = $conn->prepare("
+                SELECT basic_salary
+                FROM positions
+                WHERE position_id = ?
+            ");
+
+            $stmt->bind_param(
+                "i",
+                $employee['position_id']
+            );
+
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $salary_data = $result->fetch_assoc();
+
+            $stmt->close();
+
+            $basic_salary = $salary_data['basic_salary'] ?? 0;
+
+
+            /*
+             * Get total allowances.
+             */
+            $stmt = $conn->prepare("
+                SELECT COALESCE(SUM(allowances.amount), 0) AS total
+                FROM employee_allowances
+                INNER JOIN allowances
+                    ON employee_allowances.allowance_id =
+                       allowances.allowance_id
+                WHERE employee_allowances.employee_id = ?
+            ");
+
+            $stmt->bind_param(
+                "i",
+                $employee_id
+            );
+
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $allowance_data = $result->fetch_assoc();
+
+            $stmt->close();
+
+            $allowances = $allowance_data['total'] ?? 0;
+
+
+            /*
+             * Get total deductions.
+             */
+            $stmt = $conn->prepare("
+                SELECT COALESCE(SUM(deductions.amount), 0) AS total
+                FROM employee_deductions
+                INNER JOIN deductions
+                    ON employee_deductions.deduction_id =
+                       deductions.deduction_id
+                WHERE employee_deductions.employee_id = ?
+            ");
+
+            $stmt->bind_param(
+                "i",
+                $employee_id
+            );
+
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $deduction_data = $result->fetch_assoc();
+
+            $stmt->close();
+
+            $deductions = $deduction_data['total'] ?? 0;
+
+
+            /*
+             * Calculate tax.
+             */
+            $tax = ($basic_salary * $tax_percentage) / 100;
+
+
+            /*
+             * Calculate net salary.
+             */
+            $net_salary =
+                $basic_salary
+                + $allowances
+                - $deductions
+                - $tax
+                - $pension;
+
+
+            /*
+             * Insert payroll.
+             */
+            $stmt = $conn->prepare("
+                INSERT INTO payroll (
+                    employee_id,
+                    payroll_month,
+                    payroll_year,
+                    basic_salary,
+                    allowances,
+                    deductions,
+                    tax,
+                    pension,
+                    net_salary,
+                    payment_status
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending')
+            ");
+
+            $stmt->bind_param(
+                "isidddddd",
+                $employee_id,
+                $month,
+                $year,
+                $basic_salary,
+                $allowances,
+                $deductions,
+                $tax,
+                $pension,
+                $net_salary
+            );
+
+            if ($stmt->execute()) {
+                $generated++;
+            }
+
+            $stmt->close();
+        }
+
+
+        /*
+         * Create Audit Log
+         * Only log the payroll generation if at least
+         * one payroll record was successfully generated.
+         */
+        if ($generated > 0) {
+
+            $admin_id = $_SESSION['admin_id'];
+
+            if ($skipped > 0) {
+
+                $description =
+                    "Generated payroll for " .
+                    $month . " " . $year .
+                    " for " . $generated .
+                    " active employee(s). " .
+                    $skipped .
+                    " employee(s) were skipped because payroll already exists.";
+
+            } else {
+
+                $description =
+                    "Generated payroll for " .
+                    $month . " " . $year .
+                    " for " . $generated .
+                    " active employee(s).";
+            }
+
+            $audit_stmt = $conn->prepare("
+                INSERT INTO audit_logs (
+                    admin_id,
+                    action,
+                    description
+                )
+                VALUES (?, ?, ?)
+            ");
+
+            $action = "Payroll Generated";
+
+            $audit_stmt->bind_param(
+                "iss",
+                $admin_id,
+                $action,
+                $description
+            );
+
+            if (!$audit_stmt->execute()) {
+    $error = "Audit log error: " . $audit_stmt->error;
 }
 
-$stmt->close();
+$audit_stmt->close();
+        }
 
+
+        /*
+         * Display result message.
+         */
+        if ($generated > 0 && $skipped > 0) {
+
+            $success =
+                $generated .
+                " payroll record(s) generated successfully. " .
+                $skipped .
+                " employee(s) were skipped because payroll already exists.";
+
+        } elseif ($generated > 0) {
+
+            $success =
+                $generated .
+                " payroll record(s) generated successfully.";
+
+        } elseif ($skipped > 0) {
+
+            $error =
+                "Payroll has already been generated for all selected active employees.";
+
+        } else {
+
+            $error =
+                "No payroll records were generated.";
+
+        }
+    }
 }
 
-$check->close();
-
-}
+require_once("../includes/header.php");
+require_once("../includes/sidebar.php");
+require_once("../includes/navbar.php");
 ?>
-
-
-
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>Generate Payroll</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-
-<body class="bg-light">
-
-
 
 
 <div class="container mt-5">
 
-<div class="row justify-content-center">
+    <div class="row justify-content-center">
 
-<div class="col-lg-7">
+        <div class="col-lg-7">
 
-<div class="card shadow">
+            <div class="card shadow">
 
-<div
-class="card-header text-white"
-style="background:#1C5FA2;">
+                <div
+                    class="card-header text-white"
+                    style="background:#1C5FA2;"
+                >
+                    <h3 class="mb-0">
+                        Generate Payroll
+                    </h3>
+                </div>
 
-<h3>Generate Payroll</h3>
+                <div class="card-body">
+
+                    <?php if ($error != "") { ?>
+
+                        <div class="alert alert-danger">
+                            <?= htmlspecialchars($error); ?>
+                        </div>
+
+                    <?php } ?>
+
+                    <?php if ($success != "") { ?>
+
+                        <div class="alert alert-success">
+                            <?= htmlspecialchars($success); ?>
+                        </div>
+
+                    <?php } ?>
+
+
+                    <div class="alert alert-info">
+
+                        <strong>Payroll Generation</strong>
+
+                        <br>
+
+                        Payroll will be generated for
+                        <strong>all active employees</strong>
+                        for the selected month and year.
+
+                        <br><br>
+
+                        Existing payroll records for the selected
+                        month and year will not be duplicated.
+
+                    </div>
+
+
+                    <form method="POST">
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Payroll Month
+                            </label>
+
+                            <select
+                                name="payroll_month"
+                                class="form-select"
+                                required
+                            >
+
+                                <?php
+                                $months = [
+                                    "January",
+                                    "February",
+                                    "March",
+                                    "April",
+                                    "May",
+                                    "June",
+                                    "July",
+                                    "August",
+                                    "September",
+                                    "October",
+                                    "November",
+                                    "December"
+                                ];
+
+                                foreach ($months as $month_name) {
+                                ?>
+
+                                    <option value="<?= $month_name; ?>">
+                                        <?= $month_name; ?>
+                                    </option>
+
+                                <?php } ?>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Payroll Year
+                            </label>
+
+                            <input
+                                type="number"
+                                name="payroll_year"
+                                class="form-control"
+                                value="<?= date('Y'); ?>"
+                                min="2000"
+                                max="2100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            name="generate"
+                            class="btn text-white"
+                            style="background:#0291DA;"
+                            onclick="return confirm(
+                                'Are you sure you want to generate payroll for all active employees for the selected month and year?'
+                            );"
+                        >
+                            Generate Payroll for All Staff
+                        </button>
+
+
+                        <a
+                            href="payroll.php"
+                            class="btn btn-secondary"
+                        >
+                            Cancel
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="card-body">
-
-
-
-
-<?php
-
-if($error!=""){
-
-?>
-
-<div class="alert alert-danger">
-
-<?= $error; ?>
-
-</div>
-
-<?php
-
-}
-
-if($success!=""){
-
-?>
-
-<div class="alert alert-success">
-
-<?= $success; ?>
-
-</div>
-
-<?php
-
-}
-
-?>
-
-
-
-
-
-<form method="POST">
-
-
-
-
-<div class="mb-3">
-
-<label>
-
-Employee
-
-</label>
-
-<select
-
-name="employee_id"
-
-class="form-select"
-
-required>
-
-<option value="">Select Employee</option>
-
-<?php
-
-$result=mysqli_query(
-
-$conn,
-
-"SELECT employee_id,
-employee_number,
-first_name,
-last_name
-
-FROM employees
-
-WHERE status='Active'
-
-ORDER BY first_name"
-
-);
-
-while($row=mysqli_fetch_assoc($result)){
-
-?>
-
-<option value="<?= $row['employee_id'];?>">
-
-<?= htmlspecialchars(
-$row['employee_number']." - ".$row['first_name']." ".$row['last_name']
-); ?>
-
-</option>
-
-<?php } ?>
-
-</select>
-
-</div>
-
-
-
-
-
-<div class="mb-3">
-
-<label>
-
-Payroll Month
-
-</label>
-
-<select
-name="payroll_month"
-class="form-select"
-required>
-
-<option>January</option>
-
-<option>February</option>
-
-<option>March</option>
-
-<option>April</option>
-
-<option>May</option>
-
-<option>June</option>
-
-<option>July</option>
-
-<option>August</option>
-
-<option>September</option>
-
-<option>October</option>
-
-<option>November</option>
-
-<option>December</option>
-
-</select>
-
-</div>
-
-
-
-
-<div class="mb-3">
-
-<label>
-
-Payroll Year
-
-</label>
-
-<input
-
-type="number"
-
-name="payroll_year"
-
-class="form-control"
-
-value="<?= date('Y');?>"
-
-required>
-
-</div>
-
-
-
-
-
-<button
-
-type="submit"
-
-name="generate"
-
-class="btn text-white"
-
-style="background:#0291DA;">
-
-Generate Payroll
-
-</button>
-
-<a
-
-href="payroll.php"
-
-class="btn btn-secondary">
-
-Cancel
-
-</a>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-</body>
-
-</html>
+<?php require_once("../includes/footer.php"); ?>
