@@ -25,13 +25,15 @@
 <link rel="stylesheet"
 href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
 
+<!-- Custom CSS -->
+<link rel="stylesheet" href="/employee-management-system/main/admin/assets/responsive.css">
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <!-- Chart JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- Custom CSS -->
-<link rel="stylesheet" href="/employee-management-system/main/admin/assets/responsive.css">
+
 
 <style>
 
@@ -60,8 +62,7 @@ padding:30px;
 
 </style>
 
-<!-- Responsive CSS -->
-<link rel="stylesheet" href="../assets/css/responsive.css">
+
 
 </head>
 <body>

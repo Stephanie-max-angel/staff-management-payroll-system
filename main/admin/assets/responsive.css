@@ -1,30 +1,4 @@
 /* =========================================
-   GLOBAL RESPONSIVE FIX
-========================================= */
-
-html,
-body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-
-/* =========================================
-   ADMIN SIDEBAR
-========================================= */
-
-.admin-sidebar {
-    width: 260px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: left 0.3s ease;
-}
-
-
-/* =========================================
    MAIN CONTENT
 ========================================= */
 
@@ -37,245 +11,16 @@ body {
 
 
 /* =========================================
-   DESKTOP
-   1001px+
+   NAVBAR
 ========================================= */
 
-@media (min-width: 1001px) {
-
-    .admin-sidebar {
-        left: 0 !important;
-    }
-
-    .main-content {
-        margin-left: 260px !important;
-        width: calc(100% - 260px) !important;
-    }
-
-    .sidebar-toggle {
-        display: none !important;
-    }
+.main-content .navbar {
+    width: 100%;
+    background: #ffffff !important;
 }
 
-
-/* =========================================
-   TABLET
-   701px - 1000px
-========================================= */
-
-@media (min-width: 701px) and (max-width: 1000px) {
-
-    .admin-sidebar {
-        left: -260px !important;
-    }
-
-    .admin-sidebar.sidebar-open {
-        left: 0 !important;
-    }
-
-    .main-content {
-        margin-left: 0 !important;
-        width: 100% !important;
-        padding: 25px;
-        box-sizing: border-box;
-    }
-
-    .sidebar-toggle {
-        display: flex !important;
-    }
-}
-
-
-/* =========================================
-   PHONE
-   700px and below
-========================================= */
-
-@media (max-width: 700px) {
-
-    .admin-sidebar {
-        left: -260px !important;
-    }
-
-    .admin-sidebar.sidebar-open {
-        left: 0 !important;
-    }
-
-    .main-content {
-        margin-left: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 0 !important;
-        overflow-x: hidden;
-        box-sizing: border-box;
-    }
-
-    .sidebar-toggle {
-        display: flex !important;
-    }
-}
-
-
-/* =========================================
-   HAMBURGER
-========================================= */
-
-.sidebar-toggle {
-    display: none;
-
-    position: fixed;
-    top: 15px;
-    left: 15px;
-
-    width: 45px;
-    height: 45px;
-
-    align-items: center;
-    justify-content: center;
-
-    border: none;
-    border-radius: 8px;
-
-    background: #1C5FA2;
-    color: white;
-
-    font-size: 25px;
-    cursor: pointer;
-
-    z-index: 5000;
-}
-
-
-/* =========================================
-   RESPONSIVE TABLES
-========================================= */
-
-@media (max-width: 700px) {
-
-    .table-responsive {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        border-radius: 10px;
-    }
-
-    .table-responsive table {
-        width: 100%;
-        min-width: 700px;
-        margin-bottom: 0;
-    }
-}
-
-
-/* =========================================
-   EMPLOYEE SIDEBAR
-========================================= */
-
-.employee-sidebar {
-    width: 260px !important;
-    height: 100vh !important;
-
-    background: #1C5FA2;
-
-    position: fixed !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-
-    z-index: 3000 !important;
-
-    box-sizing: border-box;
-    transition: left 0.3s ease;
-}
-
-
-/* =========================================
-   EMPLOYEE SIDEBAR - DESKTOP
-   1001px+
-========================================= */
-
-@media (min-width: 1001px) {
-
-    .employee-sidebar {
-        left: 0 !important;
-        top: 0 !important;
-    }
-
-    .sidebar-toggle {
-        display: none !important;
-    }
-}
-
-
-/* =========================================
-   EMPLOYEE SIDEBAR - TABLET
-   iPad Air / iPad Mini
-   701px - 1000px
-========================================= */
-
-@media (min-width: 701px) and (max-width: 1000px) {
-
-    .employee-sidebar {
-        left: -260px !important;
-        top: 0 !important;
-        bottom: 0 !important;
-    }
-
-    .employee-sidebar.sidebar-open {
-        left: 0 !important;
-    }
-
-    .sidebar-toggle {
-        display: flex !important;
-    }
-}
-
-
-/* =========================================
-   EMPLOYEE SIDEBAR - PHONE
-   700px and below
-========================================= */
-
-@media (max-width: 700px) {
-
-    .employee-sidebar {
-        left: -260px !important;
-        top: 0 !important;
-        bottom: 0 !important;
-    }
-
-    .employee-sidebar.sidebar-open {
-        left: 0 !important;
-    }
-
-    .sidebar-toggle {
-        display: flex !important;
-    }
-}
-
-
-/* =========================================
-   EMPLOYEE MAIN CONTENT
-========================================= */
-
-@media (max-width: 1000px) {
-
-    .main-content {
-        margin-left: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box;
-    }
-}
-
-
-/* =========================================
-   EMPLOYEE NAVBAR
-========================================= */
-
-.main-content > .container-fluid {
+.main-content .navbar .container-fluid {
+    position: relative;
     width: 100%;
     min-height: 65px;
 
@@ -283,223 +28,49 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    background: #ffffff;
-    color: #212529;
+    padding: 12px 20px;
+}
 
-    padding: 15px 25px;
 
+/* =========================================
+   HAMBURGER BUTTON
+========================================= */
+
+.main-content .navbar .sidebar-toggle {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+    padding: 0;
     margin: 0;
-    box-sizing: border-box;
-}
 
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 
-/* Dashboard title */
+    background: transparent !important;
+    color: #1C5FA2 !important;
 
-.main-content > .container-fluid > h4 {
-    margin: 0 !important;
-    white-space: nowrap;
-}
-
-
-/* Employee information */
-
-.main-content > .container-fluid > .d-flex {
-    display: flex !important;
     align-items: center;
-    flex-shrink: 0;
+    justify-content: center;
+
+    font-size: 22px;
+    cursor: pointer;
 }
 
 
 /* =========================================
-   EMPLOYEE NAVBAR - TABLET
-   iPad Air / iPad Mini
+   DASHBOARD TITLE
 ========================================= */
 
-@media (min-width: 701px) and (max-width: 1000px) {
+.main-content .navbar h4 {
+    margin: 0;
+    padding: 0;
 
-    .main-content {
-        padding: 20px !important;
-    }
+    font-size: 22px;
+    font-weight: 700;
 
-    .main-content > .container-fluid {
-        width: 100%;
-        min-height: 70px;
-
-        padding: 12px 15px 12px 70px !important;
-
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    /* Center Employee Dashboard */
-
-    .main-content > .container-fluid > h4 {
-        position: absolute;
-
-        left: 50%;
-        transform: translateX(-50%);
-
-        margin: 0 !important;
-
-        font-size: 20px !important;
-        white-space: nowrap;
-
-        z-index: 1;
-    }
-
-    /* Keep employee information on right */
-
-    .main-content > .container-fluid > .d-flex {
-        margin-left: auto !important;
-        flex-shrink: 0 !important;
-        z-index: 2;
-    }
-
-    /* Hamburger */
-
-    .sidebar-toggle {
-        display: flex !important;
-
-        position: fixed !important;
-
-        top: 15px !important;
-        left: 15px !important;
-
-        width: 45px !important;
-        height: 45px !important;
-
-        z-index: 5000 !important;
-    }
-}
-
-
-/* =========================================
-   EMPLOYEE NAVBAR - PHONE
-   700px and below
-========================================= */
-
-@media (max-width: 700px) {
-
-    .main-content {
-        padding: 0 !important;
-    }
-
-    .main-content > .container-fluid {
-        width: 100%;
-        min-height: 65px;
-
-        padding: 10px 10px 10px 70px !important;
-
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    /* Center Employee Dashboard */
-
-    .main-content > .container-fluid > h4 {
-        position: absolute;
-
-        left: 50%;
-        transform: translateX(-50%);
-
-        margin: 0 !important;
-
-        font-size: 17px !important;
-
-        max-width: 45%;
-
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        text-align: center;
-
-        z-index: 1;
-    }
-
-    /* Employee information */
-
-    .main-content > .container-fluid > .d-flex {
-        margin-left: auto !important;
-        flex-shrink: 0 !important;
-        z-index: 2;
-    }
-
-    /* Hide Welcome + employee name */
-
-    .main-content > .container-fluid > .d-flex > .me-3 {
-        display: none !important;
-    }
-
-    /* Profile circle */
-
-    .main-content > .container-fluid .rounded-circle {
-        width: 38px !important;
-        height: 38px !important;
-        min-width: 38px !important;
-
-        font-size: 16px;
-    }
-
-    /* Hamburger */
-
-    .sidebar-toggle {
-        display: flex !important;
-
-        position: fixed !important;
-
-        top: 15px !important;
-        left: 15px !important;
-
-        width: 45px !important;
-        height: 45px !important;
-
-        z-index: 5000 !important;
-    }
-}
-
-
-/* =========================================
-   EMPLOYEE PROFILE PAGE
-========================================= */
-
-.employee-profile-page {
-    width: 100%;
-    max-width: 1200px;
-    margin: 30px auto 0 auto;
-    padding: 0 25px;
-    box-sizing: border-box;
-}
-
-.employee-profile-page .row {
-    width: 100%;
-    margin: 0 auto;
-}
-
-.employee-profile-card {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-
-/* =========================================
-   DESKTOP
-========================================= */
-
-@media (min-width: 1001px) {
-
-    .employee-profile-page {
-        max-width: 1150px;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
+    white-space: nowrap;
 }
 
 
@@ -507,23 +78,65 @@ body {
    TABLET
 ========================================= */
 
-@media (min-width: 701px) and (max-width: 1000px) {
+@media (max-width: 1000px) {
 
-    .employee-profile-page {
-        width: 100%;
-        max-width: 900px;
-        margin: 25px auto 0 auto !important;
-        padding: 0 20px !important;
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
     }
 
-    .employee-profile-page .row {
-        margin: 0;
+    .main-content .navbar .container-fluid {
+        min-height: 65px;
+        padding: 12px 15px !important;
     }
 
-    .employee-profile-card {
-        width: 100%;
+
+    /* HAMBURGER */
+
+    .main-content .navbar .sidebar-toggle {
+        display: flex !important;
+
+        flex: 0 0 40px;
+
+        width: 40px !important;
+        height: 40px !important;
+
+        background: transparent !important;
+        color: #1C5FA2 !important;
+
+        z-index: 10;
     }
 
+
+    /* DASHBOARD — TRUE CENTER */
+
+    .main-content .navbar h4 {
+        position: absolute !important;
+
+        left: 50% !important;
+        top: 50% !important;
+
+        transform: translate(-50%, -50%) !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        font-size: 18px !important;
+
+        white-space: nowrap !important;
+
+        z-index: 1;
+    }
+
+
+    /* ADMINISTRATOR — RIGHT */
+
+    .main-content .navbar .container-fluid > .d-flex {
+        margin-left: auto !important;
+        flex-shrink: 0;
+
+        z-index: 10;
+    }
 }
 
 
@@ -533,58 +146,275 @@ body {
 
 @media (max-width: 700px) {
 
-    .employee-profile-page {
-        width: 100% !important;
-        max-width: 100% !important;
-
-        margin: 15px 0 0 0 !important;
-
-        padding: 0 12px !important;
-
-        box-sizing: border-box;
+    .main-content .navbar .container-fluid {
+        min-height: 60px;
+        padding: 10px 12px !important;
     }
 
-    .employee-profile-page .row {
-        width: 100% !important;
-        margin: 0 !important;
+
+    .main-content .navbar .sidebar-toggle {
+        width: 35px !important;
+        height: 35px !important;
+
+        flex-basis: 35px;
+
+        font-size: 19px !important;
     }
 
-    .employee-profile-page [class*="col-"] {
-        width: 100% !important;
-        max-width: 100% !important;
 
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+    .main-content .navbar h4 {
+        font-size: 15px !important;
     }
 
-    .employee-profile-card {
-        width: 100% !important;
-        max-width: 100% !important;
 
-        margin: 0 !important;
+    /* Hide administrator text */
 
-        box-sizing: border-box;
+    .main-content .navbar .me-4 {
+        display: none !important;
     }
 
-    .employee-profile-card .card-body {
-        padding: 15px !important;
-    }
 
+    /* Profile circle */
+
+    .main-content .navbar .rounded-circle {
+        width: 36px !important;
+        height: 36px !important;
+    }
 }
 
 
 /* =========================================
-   SMALL PHONE
+   VERY SMALL PHONE
 ========================================= */
 
 @media (max-width: 400px) {
 
-    .employee-profile-page {
-        padding: 0 8px !important;
+    .main-content .navbar .sidebar-toggle {
+        width: 32px !important;
+        height: 32px !important;
+
+        flex-basis: 32px;
+
+        font-size: 17px !important;
     }
 
-    .employee-profile-card .card-body {
-        padding: 12px !important;
+    .main-content .navbar h4 {
+        font-size: 14px !important;
     }
 
+    .main-content .navbar .rounded-circle {
+        width: 34px !important;
+        height: 34px !important;
+    }
+}
+
+
+/* =========================================
+   ADMIN NAVBAR - FINAL FIX
+========================================= */
+
+.main-content .navbar {
+    width: 100%;
+}
+
+.main-content .navbar .container-fluid {
+    position: relative;
+    width: 100%;
+    min-height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   HAMBURGER
+========================================= */
+
+.main-content .navbar .sidebar-toggle {
+    display: none;
+
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+
+    width: 40px !important;
+    height: 40px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: none !important;
+    border-radius: 6px !important;
+
+    background: transparent !important;
+    color: #1C5FA2 !important;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+
+    z-index: 10;
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+.main-content .navbar .container-fluid > h4 {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (min-width: 701px) and (max-width: 1000px) {
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 20px !important;
+    }
+
+    .main-content .navbar .container-fluid {
+        min-height: 65px;
+        padding: 12px 15px !important;
+    }
+
+    /* HAMBURGER */
+
+    .main-content .navbar .sidebar-toggle {
+        display: flex !important;
+
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+
+        width: 40px !important;
+        height: 40px !important;
+
+        background: transparent !important;
+        color: #1C5FA2 !important;
+
+        flex-shrink: 0;
+
+        z-index: 10;
+    }
+
+    /* DASHBOARD - TRUE CENTER */
+
+    .main-content .navbar .container-fluid > h4 {
+        position: absolute !important;
+
+        left: 50% !important;
+        top: 50% !important;
+
+        transform: translate(-50%, -50%) !important;
+
+        margin: 0 !important;
+
+        font-size: 18px !important;
+
+        white-space: nowrap !important;
+
+        z-index: 1;
+    }
+
+    /* ADMINISTRATOR / PROFILE */
+
+    .main-content .navbar .container-fluid > .d-flex {
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
+
+        z-index: 10;
+    }
+}
+
+
+/* =========================================
+   PHONE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .main-content .navbar .container-fluid {
+        min-height: 60px;
+        padding: 10px 12px !important;
+    }
+
+    /* HAMBURGER */
+
+    .main-content .navbar .sidebar-toggle {
+        display: flex !important;
+
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+
+        width: 35px !important;
+        height: 35px !important;
+
+        background: transparent !important;
+        color: #1C5FA2 !important;
+
+        font-size: 19px !important;
+
+        flex-shrink: 0;
+    }
+
+    /* DASHBOARD */
+
+    .main-content .navbar .container-fluid > h4 {
+        position: absolute !important;
+
+        left: 50% !important;
+        top: 50% !important;
+
+        transform: translate(-50%, -50%) !important;
+
+        margin: 0 !important;
+
+        font-size: 15px !important;
+
+        white-space: nowrap !important;
+
+        z-index: 1;
+    }
+
+    /* ADMINISTRATOR */
+
+    .main-content .navbar .container-fluid > .d-flex {
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
+
+        z-index: 10;
+    }
+
+    /* Hide administrator text */
+
+    .main-content .navbar .me-4 {
+        display: none !important;
+    }
+
+    /* Profile */
+
+    .main-content .navbar .rounded-circle {
+        width: 36px !important;
+        height: 36px !important;
+    }
 }

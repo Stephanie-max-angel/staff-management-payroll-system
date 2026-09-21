@@ -153,7 +153,105 @@ require_once("includes/navbar.php");
         </a>
 
     </div>
+    <?php
+// Get the 5 most recent audit logs
+$audit_sql = "
+    SELECT 
+        audit_logs.action,
+        audit_logs.description,
+        audit_logs.created_at,
+        admins.username
+    FROM audit_logs
+    LEFT JOIN admins
+        ON audit_logs.admin_id = admins.admin_id
+    ORDER BY audit_logs.created_at DESC
+    LIMIT 5
+";
 
+$audit_result = mysqli_query($conn, $audit_sql);
+?>
+
+<!-- Recent Audit Activity -->
+<div class="recent-activity">
+
+    <div class="activity-header">
+        <div>
+            <h2>Recent Activity</h2>
+            <p>Latest activities performed by administrators.</p>
+        </div>
+
+        <a href="/employee-management-system/main/admin/audit-log/audit-log.php"
+           class="view-all-btn">
+            View All Audit Logs
+            <i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
+
+    <div class="activity-table-wrapper">
+
+        <table class="activity-table">
+
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Admin</th>
+                    <th>Action</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <?php if ($audit_result && mysqli_num_rows($audit_result) > 0): ?>
+
+                    <?php while ($audit = mysqli_fetch_assoc($audit_result)): ?>
+
+                        <tr>
+
+                            <td>
+                                <?= date(
+                                    'd M Y, h:i A',
+                                    strtotime($audit['created_at'])
+                                ); ?>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars(
+                                    $audit['username'] ?? 'Unknown'
+                                ); ?>
+                            </td>
+
+                            <td>
+                                <span class="activity-badge">
+                                    <?= htmlspecialchars($audit['action']); ?>
+                                </span>
+                            </td>
+
+                            <td>
+                                <?= htmlspecialchars($audit['description']); ?>
+                            </td>
+
+                        </tr>
+
+                    <?php endwhile; ?>
+
+                <?php else: ?>
+
+                    <tr>
+                        <td colspan="4" class="no-activity">
+                            No recent activity found.
+                        </td>
+                    </tr>
+
+                <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 </div>
 
 
@@ -244,6 +342,118 @@ require_once("includes/navbar.php");
 .dashboard-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* Recent Activity */
+
+.recent-activity {
+    background: white;
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.activity-header h2 {
+    margin: 0 0 5px;
+    font-size: 23px;
+    color: #222;
+}
+
+.activity-header p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.view-all-btn {
+    background: #1c5fa2;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+.view-all-btn:hover {
+    background: #0291da;
+    color: white;
+}
+
+.view-all-btn i {
+    margin-left: 5px;
+}
+
+.activity-table-wrapper {
+    overflow-x: auto;
+}
+
+.activity-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.activity-table th {
+    background: #f5f7fb;
+    color: #444;
+    font-weight: 600;
+    padding: 14px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.activity-table td {
+    padding: 15px 14px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+    font-size: 14px;
+}
+
+.activity-table tr:last-child td {
+    border-bottom: none;
+}
+
+.activity-badge {
+    display: inline-block;
+    background: #e8f1fb;
+    color: #1c5fa2;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.no-activity {
+    text-align: center !important;
+    padding: 30px !important;
+    color: #999 !important;
+}
+
+/* Recent Activity Mobile */
+
+@media (max-width: 700px) {
+
+    .activity-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .view-all-btn {
+        display: inline-block;
+    }
+
+    .recent-activity {
+        padding: 20px;
+    }
 }
 
 

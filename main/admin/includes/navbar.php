@@ -3,7 +3,12 @@
   
 
 <div class="container-fluid">
-<button type="button" class="sidebar-toggle" id="sidebarToggle">
+<button
+    type="button"
+    class="sidebar-toggle"
+    id="sidebarToggle"
+    onclick="openSidebar()"
+>
     <i class="bi bi-list"></i>
 </button>
 <h4 class="fw-bold">
